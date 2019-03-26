@@ -1,0 +1,27 @@
+{% extends "layouts/main.html" %}
+
+{% block content %}
+<H1>Welchen Site möchten Sie löschen?</H1>
+<hr>
+<br>
+ <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.name.label }}<br>
+            {{ form.name }}<br>
+
+          <br>
+
+        </p>
+
+        <p>{{ form.submit() }}</p>
+    </form>
+<h1>Wollen Sie alle Sites löschen?</h1>
+
+ <form action="" method="post">
+        {{ form.hidden_tag() }}
+
+
+        <p>{{ form1.submit1() }}</p>
+    </form>
+{% endblock %}

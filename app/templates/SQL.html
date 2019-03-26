@@ -1,0 +1,26 @@
+{% extends "layouts/main.html" %}
+
+{% block content %}
+<h1>SQL Statements ausführen</h1>
+<hr>
+Hinweis: Es existiert zur Zeit keine Validation für das SQL Statement! Bitte benutzen Sie diese Anwendung mit Vorsicht!
+
+<p>Beispiel Statement: INSERT INTO site (name, region, adresse)
+VALUES ('Dortmund', 'NRW', '44135');</p>
+ <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.sql.label }}<br>
+            {{ form.sql(size=300) }}<br>
+
+            <br>
+            {% for error in form.sql.errors %}
+          <br>
+        <span class="alert alert-danger" role="alert">{{ error }}</span>
+            {% endfor %}
+        </p>
+
+
+        <p>{{ form.submit() }}</p>
+    </form>
+{% endblock %}

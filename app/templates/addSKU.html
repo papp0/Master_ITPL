@@ -1,0 +1,45 @@
+{% extends "layouts/main.html" %}
+
+{% block content %}
+<h1>SKU einem Standort hinzufügen</h1>
+<hr>
+
+ <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.standort.label }}<br>
+            {{ form.standort }}<br>
+            <br>
+            {% for error in form.standort.errors %}
+          <br>
+        <span class="alert alert-danger" role="alert">{{ error }}</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.name.label }}<br>
+            {{ form.name(size=32) }}<br>
+            {% for error in form.name.errors %}
+          <br>
+        <span class="alert alert-danger" role="alert">{{ error }}</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.sortiment.label }}<br>
+            {{ form.sortiment(size=32) }}<br>
+            {% for error in form.sortiment.errors %}
+              <br>
+        <span class="alert alert-danger" role="alert">{{ error }}</span>
+            {% endfor %}
+        </p>
+     <p>
+            {{ form.gewicht.label }}<br>
+            {{ form.gewicht(size=32) }}<br>
+            {% for error in form.gewicht.errors %}
+              <br>
+        <span class="alert alert-danger" role="alert">{{ error }}</span>
+            {% endfor %}
+        </p>
+
+        <p>{{ form.submit() }}</p>
+    </form>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "layouts/main.html" %}
+
+{% block content %}
+{% if current_user.is_authenticated %}
+<H1>  Hallo {{ current_user.username }}!</H1>
+<hr>
+{% endif %}
+<div class="row">
+<div class="col-md-6">
+    
+Zurzeit befinden sich <span style="color:red">{{anzahl}}</span> Site/s in Ihrem Netzwerk<br>
+     <a href="{{ url_for('addSite') }}" class="btn btn-secondary">Site hinzufügen</a>
+     <a href="{{ url_for('updateSite') }}" class="btn btn-secondary">Site bearbeiten</a>
+      <a href="{{ url_for('deleteSite') }}" class="btn btn-secondary">Site löschen</a><br>
+<br><br>
+Folgende Sites sind aktiv:
+<ul>
+{% for site in sites %}
+    <li>{{site}}</li>
+{% endfor %}
+</ul>
+</div>
+<div class="col-md-6">
+    Zurzeit befinden sich <span style="color:red">{{sku}}</span> SKU/s in Ihren/m Site/s<br>
+    <a href="{{ url_for('addSKU') }}" class="btn btn-secondary">SKU hinzufügen</a>
+</div>
+    </div>
+<hr>
+<h1>möchten Sie raw SQL benutzen?</h1>
+ <a href="{{ url_for('SQL') }}" class="btn btn-secondary">SQL</a>
+{% endblock %}
