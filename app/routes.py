@@ -1,3 +1,4 @@
+"""Verwaltung von Routes der Applikation"""
 from flask import render_template, flash, redirect, url_for, request
 from app import app
 from app import db
@@ -8,7 +9,7 @@ from app.models import User, Site, SKU
 from werkzeug.urls import url_parse
 from sqlalchemy.sql import text
 
-
+"""Willkommens Seite: zeigt an wie viele Sites und SKU vorhanden, sowie Direktion zu den Maßnahmen"""
 @app.route('/index')
 @login_required
 def index():
@@ -16,16 +17,20 @@ def index():
     sku = SKU.query.all()
     return render_template('Welcome.html', sites=sites, anzahl=len(sites), sku=len(sku))
 
-
+"""Maßnahme zur Erstellung einer Site"""
 @app.route('/addSite', methods=['GET', 'POST'])
 @login_required
 def addSite():
+    """addSite sind 3 vordefinierte Sites"""
     addSite = [('Bochum', 'NRW', '44787'), ('Berlin', 'Berlin', '10115'), ('Köln', 'NRW', '50667')]
+    """Formen aus forms.py"""
     form1 = SiteaddrandomForm()
     form2 = SiteForm()
+    """bei bestätigung der form1 wird überprüft ob Bochum bereits besteht, wenn ja Ajax Ausgabe flash()"""
     if form1.submit1.data and form1.validate_on_submit():
         check = Site.query.filter_by(name='Bochum').first()
         flash('bereits hinzugefügt!')
+        """Hinzufügen der sites nach dem submit"""
         if check is None:
             sites = []
             for name, region, adresse in addSite:
@@ -38,7 +43,7 @@ def addSite():
 
     if form2.submit2.data and form2.validate_on_submit():
         site = Site(name=form2.name.data, region=form2.region.data, adresse=form2.adresse.data)
-
+        """Hinzufügen der Site, die in die Form eingegeben wurde"""
         db.session.add(site)
         db.session.commit()
         flash('Site hinzugefügt')
@@ -46,7 +51,7 @@ def addSite():
 
     return render_template('addSite.html', form1=form1, form2=form2)
 
-
+"""Maßnahme zum bearbeiten einer bereits bestehenden Site"""
 @app.route('/updateSite', methods=['GET', 'POST'])
 @login_required
 def updateSite():
@@ -60,6 +65,7 @@ def updateSite():
     return render_template('updateSite.html', form=form)
 
 
+"""Maßnahme zum löschen von Sites"""
 @app.route('/deleteSite', methods=['GET', 'POST'])
 @login_required
 def deleteSite():
@@ -78,7 +84,7 @@ def deleteSite():
         db.session.commit()
     return render_template('deleteSite.html', form=form, form1=form1)
 
-
+"""Maßnahme zum hinzufügen von SKU"""
 @app.route('/addSKU', methods=['GET', 'POST'] )
 @login_required
 def addSKU():
@@ -89,15 +95,18 @@ def addSKU():
         db.session.commit()
     return render_template('addSKU.html', form=form)
 
+"""Maßnahme für plain SQL"""
 @app.route('/SQL', methods=['GET', 'POST'] )
 @login_required
 def SQL():
     form = SQLForm()
+    """Ausführen von plain SQL"""
     if form.submit.data and form.validate_on_submit():
         db.engine.execute(text(form.sql.data))
     return render_template('SQL.html', form=form)
 
 
+"""Login Seite für User"""
 @app.route('/', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
@@ -122,7 +131,7 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
-
+"""Regestrationsseite"""
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:

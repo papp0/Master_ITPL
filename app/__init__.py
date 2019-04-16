@@ -4,11 +4,15 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
 
-
+"""Erstellen der Flask Applikation sowie Bindung von verschiedenen Bibliotheken an diese"""
 app = Flask(__name__)
+"""Bindung der Konfiguration"""
 app.config.from_object(Config)
+"""Bindung der Datenbankabstraktionsschicht"""
 db = SQLAlchemy(app)
+"""Bindung der Schema-Migration"""
 migrate = Migrate(app, db)
+"""Bindung eines LoginManagers"""
 login = LoginManager(app)
 login.login_view = 'login'
 

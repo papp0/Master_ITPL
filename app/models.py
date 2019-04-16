@@ -1,8 +1,10 @@
+"""Defintion des Datenbankschemas"""
 from app import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from app import login
 
+"""Relation für Benutzer"""
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), index=True, unique=True)
@@ -23,6 +25,7 @@ class User(UserMixin, db.Model):
 def load_user(id):
     return User.query.get(int(id))
 
+"""Relation für Sites"""
 class Site(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), index=True, unique=True)
@@ -34,7 +37,7 @@ class Site(db.Model):
         return "<Site(name='%s', region='%s', adresse='%s')>" % (
             self.name, self.region, self.adresse)
 
-
+"""Relation für SKU"""
 class SKU(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64))
